@@ -148,9 +148,20 @@ defmodule Ecto.ERD.Document.Dot do
     "#Enum<#{inspect(Enum.sort(Map.keys(on_dump)), limit: 10)}>"
   end
 
+  defp format_type({:parameterized, {Ecto.Enum, %{on_dump: on_dump}}}) do
+    "#Enum<#{inspect(Enum.sort(Map.keys(on_dump)), limit: 10)}>"
+  end
+
   defp format_type(
          {:parameterized, Ecto.Embedded,
           %Ecto.Embedded{cardinality: cardinality, related: related}}
+       ) do
+    "#Ecto.Embedded<#{inspect([{cardinality, related}])}>"
+  end
+
+  defp format_type(
+         {:parameterized,
+          {Ecto.Embedded, %Ecto.Embedded{cardinality: cardinality, related: related}}}
        ) do
     "#Ecto.Embedded<#{inspect([{cardinality, related}])}>"
   end
